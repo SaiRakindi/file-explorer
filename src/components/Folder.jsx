@@ -4,23 +4,30 @@ const Folder = ({ explorerData }) => {
   const [isFolderExpanded, setIsFolderExpanded] = useState(false);
 
   return (
-    <div style={{ marginTop: "5px" }}>
+    <section>
       {explorerData.isFolder ? (
-        <div onClick={() => setIsFolderExpanded(!isFolderExpanded)}>
-          <span>📁 {explorerData.name}</span>
+        <div style={{ marginTop: 5 }}>
+          <div className="folder">
+            <span onClick={() => setIsFolderExpanded(!isFolderExpanded)}>
+              📁 {explorerData.name}
+            </span>
+          </div>
+
+          <div
+            style={{
+              display: isFolderExpanded ? "block" : "none",
+              paddingLeft: "20px",
+            }}
+          >
+            {explorerData.items.map((explorerItem) => (
+              <Folder explorerData={explorerItem} key={explorerItem.id} />
+            ))}
+          </div>
         </div>
       ) : (
-        <span style={{ paddingLeft: "20px" }}>📄{explorerData.name}</span>
+        <span className="file">📄{explorerData.name}</span>
       )}
-
-      <div style={{ display: isFolderExpanded ? "block" : "none" }}>
-        {explorerData.items.map((explorerItem) => (
-          <div style={{ paadingLeft: "20px" }}>
-            <Folder explorerData={explorerItem} />
-          </div>
-        ))}
-      </div>
-    </div>
+    </section>
   );
 };
 
